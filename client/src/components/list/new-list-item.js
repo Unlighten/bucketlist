@@ -4,23 +4,21 @@ import { createPost } from '../../actions/index';
 import { Link } from 'react-router';
 
 class ListItem extends Component {
-	
-
-	handleFormSubmit(formProps){
-	  //call action creator to sign up the user
-	    this.props.createPost(formProps);
+	handleFormSubmit(formProps) {
+		//call action creator to sign up the user
+		this.props.createPost(formProps);
 	}
-
 	render() {
-		const { fields: { title, topic, url, content }, handleSubmit } = this.props;
+		const {fields: {title, topic, url, content}, handleSubmit} = this.props;
 		return (
 			<form onSubmit={handleSubmit(this.handleFormSubmit.bind(this))}>
 				<h3>Create a New Post</h3>
-				
+
 				<fieldset className="form-group">
 					<label>Title</label>
 					<input type="text" className="form-control" {...title} />
 				</fieldset>
+
 				<fieldset className="form-group">
 					<label>Category</label>
 					<input type="text" className="form-control" {...topic} />
@@ -35,16 +33,17 @@ class ListItem extends Component {
 				</fieldset>
 
 				<button type="submit" className="btn btn-primary">Submit</button>
-				<Link to="/" className="btn btn-danger">Cancel</Link>
+				<Link to="/items" className="btn btn-danger">Cancel</Link>
 			</form>
 		);
-
 	}
 }
 
+function mapStateToProps(state) {
+	return { errorMessage: state.auth.error };
+}
 
 export default reduxForm({
-	form: 'ListsNewForm',
+	form: 'PostsNewForm',
 	fields: ['title', 'topic', 'url', 'content']
-}, null, { createPost })(ListItem);
-
+}, mapStateToProps, {createPost})(ListItem);

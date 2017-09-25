@@ -1,4 +1,3 @@
-
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
 
@@ -14,7 +13,7 @@ export default function(ComposedComponent) {
       }
     }
 
-    componentWillUpdate(nextProps) {
+    comonentWillUpdate(nextProps) {
       if (!nextProps.authenticated) {
         this.context.router.push('/');
       }

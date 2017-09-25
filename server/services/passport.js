@@ -1,42 +1,36 @@
-var passport = require('passport');
-var User = require('../models/user');
-var config = require('../config');
-var JwtStrategy = require('passport-jwt').Strategy;
-var ExtractJwt = require('passport-jwt').ExtractJwt;
-var LocalStrategy = require('passport-local');
+const passport = require('passport');
+const User = require('../models/user.js');
+const config = require('../config.js');
+const JwtStrategy = require('passport-jwt').Strategy;
+const ExtractJwt = require('passport-jwt').ExtractJwt;
+const LocalStrategy = require('passport-local');
 
-//create local strategy. 
-var localOptions = { usernameField: 'email'};
-var localLogin = new LocalStrategy({usernameField: 'email'}, function(email, password, done){
+let localOptions = {usernameField: 'email'};
+let localLogin = new LocalStrategy(localOptions, function(email, password, done){
 	User.findOne({email: email}, function(err, user){
-		if(err) { return done(err)};
-		if(!user) {return done(null, false); }
-	//compare passwords - is 'password' equal to user.password?
-	//compare pw from req with users saved pw
-	user.comparePassword(password, function(err, isMatch){
-		//if there was an error, return early.
-		if (err) { return done(err); }
-		//if it's not the same, it will return false and say they didn't match up.
-		if (!isMatch) { return done(null, false); }
+		if (err) {return done(err);}
+		if(!user) {return done(null, false);}
 
-		//if same, it will call passport callback with user model
-		return done(null, user);
-	});
-	//tricky part -> we salted the password, and we need to somehow decode encrypted pw to normal pw.
-
+		user.comparePassword(password, function(err, isMatch){
+			if (err) {return done(err);}
+			if (!isMatch) {return done(null, false);}
+			return done(null, user);
+		});
 	});
 });
 
-var jwtOptions ={
-	jwtFromRequest: ExtractJwt.fromHeader('authorization'), 
+let jwtOptions = {
+	jwtFromRequest: ExtractJwt.fromHeader('authorization'),
 	secretOrKey: config.secret
 };
 
-//create jwt strategy
-var jwtLogin = new JwtStrategy(jwtOptions, function(payload, done){
+let jwtLogin = new JwtStrategy(jwtOptions, function(payload, done){
 	User.findById(payload.sub, function(err, user){
-		if (err) { return done(err, false); }
-		
+
+		if (err) {
+			return done(err, false);
+		}	
+
 		if (user) {
 			done(null, user);
 		} else {
@@ -44,7 +38,6 @@ var jwtLogin = new JwtStrategy(jwtOptions, function(payload, done){
 		}
 	});
 });
-
 
 passport.use(jwtLogin);
 passport.use(localLogin);
