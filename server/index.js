@@ -6,8 +6,9 @@ const router = require('./router');
 const mongoose = require('mongoose');
 const cors = require('cors');
 
-// mongoose.connect('mongodb://localhost:bucket/bucket');
-mongoose.connect('mongodb://<dbuser>:<dbpassword>@ds149974.mlab.com:49974/bucketl');
+mongoose.connect('mongodb://localhost:bucket/bucket');
+// mongoose.connect('mongodb://<dbuser>:<dbpassword>@ds149974.mlab.com:49974/bucketl');
+
 app.use(cors());
 app.use(bodyParser.json({ type: '*/*'}));
 router(app);

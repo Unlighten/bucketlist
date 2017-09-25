@@ -3,10 +3,10 @@
   "description": "",
   "main": "index.js",
   "authors": [
-    "Paul O'Connor <jamespauloconnor@gmail.com>"
+    "Aaron Moore"
   ],
   "license": "ISC",
-  "homepage": "https://github.com/ElevenfiftyAcademy/JavaScript-301-BucketListApp",
+  "homepage": "https://github.com/Unlighten/bucketlist",
   "ignore": [
     "**/.*",
     "node_modules",
