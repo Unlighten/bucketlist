@@ -4,7 +4,7 @@ import {AUTH_USER, UNAUTH_USER, AUTH_ERROR, CREATE_POSTS, FETCH_POSTS, FETCH_POS
         UPDATE_POST} from './types';
 import authReducer from '../reducers/auth_reducer';
 
-const ROOT_URL = "http://localhost:4000"
+const ROOT_URL = "http://localhost:3000"
 let config = {
   headers: {authorization: null}
 }

@@ -4,7 +4,7 @@ import { Link, browserHistory } from 'react-router';
 import { fetchPost, deletePost } from '../../actions/index';
 import axios from 'axios';
 
-const ROOT_URL = 'http://localhost:4000';
+const ROOT_URL = 'http://localhost:3000';
 
 const config = {
 	headers: { authorization: localStorage.getItem('token') }
